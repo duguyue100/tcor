@@ -65,7 +65,7 @@ class Task(object):
         valid_flag : bool
             flag that indicates if the task is valid
         """
-        if task is None:
+        if task_dict is None:
             return False
         
         for field in self.man_fields:
