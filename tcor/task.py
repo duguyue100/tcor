@@ -16,19 +16,23 @@ class Task(object):
         Parameters
         ----------
         task_dict : dict
-            The task dictionary.
+            The task dictionary
+        task_json : str
+            The task string
         """
         self.task_dict = task_dict
         self.task_json = task_json
+        self.man_fields = ["name", "time", "id"]
+        self.opt_fields = ["notes", "order", "keys"]
 
         if self.task_dict is None and self.task_json is not None:
             self.task_dict = self._parse_task_json(self.task_json)
-            self.valid_task = True
+            self.valid_task = self.is_valid()
 
         if self.task_dict is None: 
             self.valid_task = False
         else:
-            self.valid_task =True
+            self.valid_task = self.is_valid()
 
     def _parse_task_json(self, task_json):
         """Parse task json string.
@@ -43,7 +47,36 @@ class Task(object):
         task_dict : dict
             the task dictionary object
         """
-        return json.loads(task_json)
+        try:
+            return json.loads(task_json)
+        except SyntaxError:
+            return None
+
+    def _check_task(self, task_dict):
+        """Check if task is valid.
+
+        Parameters
+        ----------
+        task_dict : dict
+            the task dictionay
+
+        Returns
+        -------
+        valid_flag : bool
+            flag that indicates if the task is valid
+        """
+        if task is None:
+            return False
+        
+        for field in self.man_fields:
+            if field not in task_dict:
+                return False
+
+        return True
+
+    def is_valid(self):
+        """check class task list."""
+        return self._check_task(self.task_dict)
 
     def set_task_dict(self, task_dict):
         """Set task dictionary.
