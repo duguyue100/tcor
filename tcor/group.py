@@ -4,6 +4,8 @@ Author: Yuhuang Hu
 Email : duguyue100@gmail.com
 """
 
+import json
+
 from tcor.task import Task
 from tcor.tasklist import TaskList
 
@@ -25,15 +27,14 @@ class TaskGroup(object):
         self.task_group_json = task_group_json
         self.man_fields = ["task-group-name", "task-group-time",
                            "task-group-id", "task-lists"]
-        self.opt_fields = ["task-group-notes", "task-group-order",
-                           "task-group-keys"]
+        self.opt_fields = ["task-group-notes", "task-group-keys"]
 
         if self.task_group_dict is None and self.task_group_json is not None:
             self.task_group_dict = self._parse_task_group_json(
                 self.task_group_json)
             self.valid_group_task = self.is_group_valid()
 
-        if self.task_group_dict is None: 
+        if self.task_group_dict is None:
             self.valid_group_task = False
         else:
             self.valid_group_task = self.is_group_valid()
@@ -80,7 +81,7 @@ class TaskGroup(object):
         """
         if task_group_dict is None:
             return False
-        
+
         for field in self.man_fields:
             if field not in task_group_dict:
                 return False
@@ -90,6 +91,17 @@ class TaskGroup(object):
     def is_group_valid(self):
         """check class task group list."""
         return self._check_group_task(self.task_group_dict)
+
+    def add_task_list(self, task_list):
+        """Add a task list.
+
+        Parameters
+        ----------
+        task_list : tcor.tasklist.TaskList
+            the task list
+        """
+        if task_list.valid_task_list is True:
+            self.task_group_dict["task-lists"].append(task_list)
 
     def set_task_group_dict(self, task_group_dict):
         """Set task group dictionary.
@@ -113,7 +125,7 @@ class TaskGroup(object):
             return a task group dictionary
         """
         if self.task_group_dict is not None:
-            return self.task_group_dict 
+            return self.task_group_dict
         else:
             return None
 
@@ -131,7 +143,7 @@ class TaskGroup(object):
         except SyntaxError:
             self.task_group_json = None
 
-        if task_json is None:
+        if self.task_json is None:
             self.task_group_json = task_group_json
 
     def get_task_group_json(self):

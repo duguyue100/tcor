@@ -30,7 +30,7 @@ class Task(object):
             self.task_dict = self._parse_task_json(self.task_json)
             self.valid_task = self.is_valid()
 
-        if self.task_dict is None: 
+        if self.task_dict is None:
             self.valid_task = False
         else:
             self.valid_task = self.is_valid()
@@ -77,7 +77,7 @@ class Task(object):
         """
         if task_dict is None:
             return False
-        
+
         for field in self.man_fields:
             if field not in task_dict:
                 return False
@@ -110,7 +110,7 @@ class Task(object):
             return a task dictionary
         """
         if self.task_dict is not None:
-            return self.task_dict 
+            return self.task_dict
         else:
             return None
 

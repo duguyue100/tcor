@@ -4,12 +4,12 @@ Author: Yuhuang Hu
 Email : duguyue100@gmail.com
 """
 
-from tcor.task import Task
+import json
 
 
 class TaskList(object):
     """Task List."""
-    
+
     def __init__(self, task_list_dict=None, task_list_json=None):
         """Initialize TaskList Object.
 
@@ -20,14 +20,13 @@ class TaskList(object):
         task_list_json : str
             task list json string
         """
-        self.task_list_dict = task_list_dict        
+        self.task_list_dict = task_list_dict
         self.task_list_json = task_list_json
 
         self.man_fields = ["task-list", "task-list-name",
                            "task-group-name", "task-list-id",
                            "task-list-time"]
-        self.opt_fields = ["task-list-keys", "task-list-order",
-                           "task-list-notes"]
+        self.opt_fields = ["task-list-keys", "task-list-notes"]
 
         if self.task_list_dict is None and self.task_list_json is not None:
             self.task_list_dict = self._parse_task_list_json(task_list_json)
@@ -81,7 +80,7 @@ class TaskList(object):
         """
         if task_list_dict is None:
             return False
-        
+
         for field in self.man_fields:
             if field not in task_list_dict:
                 return False
@@ -89,8 +88,19 @@ class TaskList(object):
         return True
 
     def is_valid(self):
-        """check class task list."""
+        """Check class task list."""
         return self._check_task(self.task_list_dict)
+
+    def add_task(self, task):
+        """Add task to the list.
+
+        Parameters
+        ----------
+        task : tcor.task.Task
+        """
+        if task.valid_task is True and \
+           self.task_list_dict.valid_task_list is True:
+            self.task_list_dict["task-list"].append(task)
 
     def set_task_list_dict(self, task_list_dict):
         """Set task list dictionary.
@@ -114,7 +124,7 @@ class TaskList(object):
             return a task list dictionary
         """
         if self.task_list_dict is not None:
-            return self.task_list_dict 
+            return self.task_list_dict
         else:
             return None
 
