@@ -22,8 +22,9 @@ class Task(object):
         """
         self.task_dict = task_dict
         self.task_json = task_json
-        self.man_fields = ["name", "time", "id"]
-        self.opt_fields = ["notes", "order", "keys"]
+        self.man_fields = ["task-name", "task-time", "task-id",
+                           "task-list-name"]
+        self.opt_fields = ["task-notes", "task-order", "task-keys"]
 
         if self.task_dict is None and self.task_json is not None:
             self.task_dict = self._parse_task_json(self.task_json)
@@ -33,6 +34,15 @@ class Task(object):
             self.valid_task = False
         else:
             self.valid_task = self.is_valid()
+
+        if self.valid_task is False:
+            self.task_dict = {
+                "task-name": "",
+                "task-list-name": "",
+                "task-id": "0",
+                "task-time": "0000-00-00"
+            }
+            self.valid_task = self.is_valid(self.task_dict)
 
     def _parse_task_json(self, task_json):
         """Parse task json string.
