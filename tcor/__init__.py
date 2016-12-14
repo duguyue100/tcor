@@ -53,5 +53,5 @@ def set_root(tcor_root_path):
 
     if not os.path.isdir(TCOR_RES_PATH):
         os.makedirs(TCOR_RES_PATH)
-    
+
     return True

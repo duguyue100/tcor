@@ -6,9 +6,6 @@ Email : duguyue100@gmail.com
 
 import json
 
-from tcor.task import Task
-from tcor.tasklist import TaskList
-
 
 class TaskGroup(object):
     """Task Group."""
