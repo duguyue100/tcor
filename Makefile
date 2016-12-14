@@ -20,4 +20,7 @@ test:
 task-test:
 	PYTHONPATH=$(PYTHONPATH) python ./tcor/test/test-task.py
 
+gui-test:
+	PYTHONPATH=$(PYTHONPATH) python ./tcor/gui/tcor_viewer
+
 cleanall:

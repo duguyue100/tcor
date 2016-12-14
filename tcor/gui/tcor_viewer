@@ -1,0 +1,66 @@
+#!/usr/bin/env python
+"""Task Conqueror Viewer.
+
+Author: Yuhuang Hu
+Email : duguyue100@gmail.com
+"""
+
+import sys
+
+from PyQt5 import QtCore, QtWidgets
+
+from tcor.gui.gui import TodoWidget
+
+# Global Parameters
+
+WIN_HEIGHT = 800
+WIN_WIDTH = 1280
+START_POS_X = 100
+START_POS_Y = 100
+
+# load default/previous task group
+# TODO: figure out this function
+# TODO: create sample input
+
+# Viewer App
+
+viewer_app = QtWidgets.QApplication(sys.argv)
+
+# viewer window initialization
+viewer_window = QtWidgets.QMainWindow()
+viewer_window.setWindowTitle("Task Conqueror")
+viewer_window.setGeometry(START_POS_X, START_POS_Y, WIN_WIDTH, WIN_HEIGHT)
+
+# status bar
+viewer_window.statusBar().showMessage("Ready")
+
+
+def changeFilePath(self):
+        print('changeFilePath')
+
+# tool bar
+# TODO: figure out options of tool bar
+vw_tool = viewer_window.addToolBar("Exit")
+action = vw_tool.addAction('Change File Path')
+action.triggered.connect(changeFilePath)
+
+# Viewer layout
+
+viewer_wid = QtWidgets.QWidget()
+viewer_window.setCentralWidget(viewer_wid)
+
+viewer_layout = QtWidgets.QGridLayout()
+viewer_wid.setLayout(viewer_layout)
+
+# TODO: setup the widgets via a function of redraw
+
+# TODO: set layout according to loaded group
+
+viewer_layout.addWidget(TodoWidget("test"), 0, 0)
+viewer_layout.addWidget(TodoWidget("test"), 0, 1)
+viewer_layout.addWidget(TodoWidget("test"), 0, 2)
+
+# Execute the viewer
+
+viewer_window.show()
+sys.exit(viewer_app.exec_())
